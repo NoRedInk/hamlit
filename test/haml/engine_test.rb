@@ -149,6 +149,11 @@ class EngineTest < Haml::TestCase
     assert_equal("<p class='3'>foo</p>", render("%p{:class => 1+2} foo").chomp)
   end
 
+  def test_interpolation_should_work_inside_attributes
+    assert_equal("123", "#{"1".concat "2", "3"}")
+    assert_equal("<p class='13'></p>", render('%p{class: "#{"1".concat "2", "3"}"}').chomp)
+  end
+
   def test_class_attr_with_array
     assert_equal("<p class='a b'>foo</p>\n", render("%p{:class => %w[a b]} foo")) # basic
     assert_equal("<p class='a b css'>foo</p>\n", render("%p.css{:class => %w[a b]} foo")) # merge with css
